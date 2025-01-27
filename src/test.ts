@@ -18,44 +18,54 @@ const listBookByAuthor = (books: Book[], author: string) =>
   books.filter((book) => book.author === author);
 
 interface Library {
-    name: string;
-    books: Book[];
-    addBook: addBook;
-    isBookAvailable: (book: Book) => boolean;
-    listBookByAuthor: (author: string) => Book[];
+  name: string;
+  books: Book[];
+  addBook: addBook;
+  isBookAvailable: (book: Book) => boolean;
+  listBookByAuthor: (author: string) => Book[];
 }
 
 class PublicLibrary implements Library {
   public books: Book[] = [];
-    constructor(public name: string) {
-        this.name = name;
-    }
+  constructor(public name: string) {
+    this.name = name;
+  }
 
-    addBook(book: Book) {
-        this.books.push(book);
-    }
+  addBook(book: Book | DigitalBook) {
+    this.books.push(book);
+  }
 
-    isBookAvailable(book: Book) {
-        return book.isAvailable;
-    }
+  isBookAvailable(book: Book) {
+    return book.isAvailable;
+  }
 
-    listBookByAuthor(author: string) {
-        return this.books.filter((book) => book.author === author);
-    }
+  listBookByAuthor(author: string) {
+    return this.books.filter((book) => book.author === author);
+  }
 }
 
-const addBook: addBook = (book) => {
-  console.log(book);
-};
+const library = new PublicLibrary("City Library");
 
-let book1: DigitalBook = {
-  title: "The Pragmatic Programmer",
-  author: "Andrew Hunt",
-  year: 2000,
+library.addBook({
+  title: "The Great Gatsby",
+  author: "F. Scott Fitzgerald",
+  year: 1925,
+  isAvailable: true,
+});
+library.addBook({
+  title: "JavaScript: The Good Parts",
+  author: "Douglas Crockford",
+  year: 2008,
+  isAvailable: false,
+});
+library.addBook({
+  title: "TypeScript Handbook",
+  author: "Microsoft",
+  year: 2021,
   isAvailable: true,
   format: "pdf",
-  downloadLink:
-    "https://www.amazon.com/The-Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
-};
+  downloadLink: "https://typescriptlang.org",
+});
 
-addBook(book1);
+console.log(library.listBookByAuthor("F. Scott Fitzgerald")); // [{ title: "The Great Gatsby", ... }]
+console.log(library.isBookAvailable(library.books.find(book=>book.title==="JavaScript: The Good Parts") as Book)); // false

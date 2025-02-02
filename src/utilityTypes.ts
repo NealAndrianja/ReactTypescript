@@ -27,3 +27,12 @@ const filterUserByRole = (
   users
     .filter((user) => user.role === role)
     .map(({ email, createdAt, ...rest }) => rest) 
+
+    const users: User[] = [
+        { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin', permissions: ['read', 'write', 'delete'], createdAt: new Date() },
+        { id: 2, name: 'Bob', email: 'bob@example.com', role: 'editor', permissions: ['read', 'write'], createdAt: new Date() },
+        { id: 3, name: 'Charlie', email: 'charlie@example.com', role: 'viewer', permissions: ['read'], createdAt: new Date() },
+      ];
+      
+      const editors = filterUserByRole(users, 'editor');
+      console.log(editors);

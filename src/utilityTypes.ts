@@ -13,3 +13,4 @@ type EditabeUser = Partial<Pick<User, 'name' | 'email' | 'role' | 'permissions'>
 
 type UserWithoutSensitiveInfo = Omit<User, 'email' | 'createdAt'>
 
+type RolePermissions = Record<User["role"], Exclude<User["permissions"][number], 'delete'>>
